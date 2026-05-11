@@ -1,7 +1,0 @@
-fastapi[standard]
-langchain-core
-langchain-openai
-langgraph
-langgraph-checkpoint-sqlite
-langsmith
-python-dotenv
