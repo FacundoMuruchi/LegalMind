@@ -1,0 +1,18 @@
+[
+  {
+    "nombre": "Infoleg - InfoLEGAL",
+    "pais": "AR",
+    "organismo": "Ministerio de Justicia y DDHH",
+    "tipo_documento": "ley",
+    "clasificacion": "oficial",
+    "url": "https://www.infoleg.gob.ar/"
+  },
+  {
+    "nombre": "IMPO - Diario Oficial Uruguay",
+    "pais": "UY",
+    "organismo": "Impo Centro de Informacion Oficial",
+    "tipo_documento": "ley",
+    "clasificacion": "oficial",
+    "url": "https://www.impo.com.uy/"
+  }
+]
