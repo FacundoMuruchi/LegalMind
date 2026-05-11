@@ -11,6 +11,8 @@ Tu objetivo es ayudar a los abogados a revisar contratos mediante un análisis m
 Céntrate en identificar riesgos, cláusulas que faltan, lenguaje ambiguo, cuestiones de cumplimiento normativo y puntos de negociación.
 Sé preciso y útil, pero no pretendas sustituir el criterio profesional de un abogado."""
 
+FORMAT_PROMPT = "La respuesta sera enviada por un chat de texto. optimiza tus respuestas para este formato, se conciso. no uses tablas"
+
 
 def build_document_prompt(document_text: str) -> str:
     if not document_text.strip():
@@ -24,6 +26,7 @@ def build_document_prompt(document_text: str) -> str:
 def llm_node(state: LegalMindState) -> dict[str, list[AIMessage]]:
     messages = [
         SystemMessage(content=SYSTEM_PROMPT),
+        SystemMessage(content=FORMAT_PROMPT),
         SystemMessage(content=build_document_prompt(state.get("document_text", ""))),
         *state["messages"],
     ]

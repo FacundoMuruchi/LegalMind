@@ -18,6 +18,7 @@ def get_chat_graph():
 
     graph_builder.add_node("load_document", load_document_node)
     graph_builder.add_node("llm", llm_node)
+    
     graph_builder.add_edge(START, "load_document")
     graph_builder.add_edge("load_document", "llm")
     graph_builder.add_edge("llm", END)
