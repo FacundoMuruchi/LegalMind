@@ -8,19 +8,24 @@ The agent is designed for lawyer clients of LegalTalent, a compliance startup. I
 
 ```text
 .
-├── agente/
+├── backend/
 │   ├── api.py                 # FastAPI app and /chat endpoint
 │   ├── graph.py               # LangGraph assembly
 │   ├── llm.py                 # ChatOpenAI configuration
 │   ├── state.py               # Graph state schemas
-│   └── nodos/
-│       ├── load_document.py   # Loads Word document text from graph config
-│       └── llm.py             # LegalMind LLM node and system prompts
-├── word-addin/
+│   ├── nodos/
+│   │   ├── load_document.py   # Loads Word document text from graph config
+│   │   └── llm.py             # LegalMind LLM node and system prompts
+│   ├── controllers/
+│   │   └── admin_controller.py  # Normative source catalog CRUD
+│   ├── data/
+│   │   ├── database.py          # SQLAlchemy engine and session factory
+│   │   └── normative_repository.py  # ORM models and repository
+│   ├── schemas/
+│   │   └── fuente.py            # Pydantic schemas for normative sources
+│   └── modules/               # Placeholders: RAG, ingestion, contract analysis
+├── frontend/
 │   ├── manifest.xml           # Word add-in manifest
-│   ├── taskpane.html          # Add-in task pane
-│   ├── taskpane.css           # Task pane styles
-│   ├── taskpane.js            # Word document reader + chat client
 │   └── assets/                # Add-in icons
 ├── requirements.txt
 ├── pyproject.toml
@@ -54,7 +59,7 @@ OPENAI_API_KEY=...
 OPENAI_MODEL=openai/gpt-oss-20b:free
 ```
 
-If you are using OpenRouter-compatible model names, `agente/llm.py` automatically uses:
+If you are using OpenRouter-compatible model names, `backend/llm.py` automatically uses:
 
 ```text
 https://openrouter.ai/api/v1
@@ -67,7 +72,7 @@ when `OPENAI_BASE_URL` is not set.
 From the project root:
 
 ```powershell
-.\.venv\Scripts\python.exe -m uvicorn agente.api:app --host 127.0.0.1 --port 8000 --reload
+.\.venv\Scripts\python.exe -m uvicorn backend.api:app --host 127.0.0.1 --port 8000 --reload
 ```
 
 Useful URLs:
@@ -129,7 +134,7 @@ Current limitation: memory is in-process only. Restarting Uvicorn clears graph m
 Install Node dependencies:
 
 ```powershell
-cd word-addin
+cd frontend
 npm install
 ```
 
@@ -160,7 +165,7 @@ https://localhost:3000/taskpane.html
 Then sideload:
 
 ```text
-word-addin/manifest.xml
+frontend/manifest.xml
 ```
 
 Use Word desktop for local development. Word on the web usually cannot reach a localhost add-in.
@@ -189,17 +194,17 @@ The graph injects that document text as context for LegalMind before calling the
 ## Development Notes
 
 - Do not commit `.env`.
-- Do not commit `word-addin/node_modules/`.
+- Do not commit `frontend/node_modules/`.
 - After backend code changes, restart Uvicorn unless running with `--reload`.
 - After manifest changes, re-run `npm run validate` and reload/sideload the manifest in Word.
-- If the add-in cannot call FastAPI, check CORS in `agente/api.py` and confirm FastAPI is running on `127.0.0.1:8000`.
+- If the add-in cannot call FastAPI, check CORS in `backend/api.py` and confirm FastAPI is running on `127.0.0.1:8000`.
 
 ## Quick Smoke Tests
 
 Backend import:
 
 ```powershell
-.\.venv\Scripts\python.exe -c "from agente.graph import get_chat_graph; print(type(get_chat_graph()).__name__)"
+.\.venv\Scripts\python.exe -c "from backend.graph import get_chat_graph; print(type(get_chat_graph()).__name__)"
 ```
 
 Health check:

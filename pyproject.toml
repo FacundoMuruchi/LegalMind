@@ -1,2 +1,2 @@
 [tool.fastapi]
-entrypoint = "agente.api:app"
+entrypoint = "backend.api:app"

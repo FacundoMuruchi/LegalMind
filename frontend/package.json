@@ -1,0 +1,16 @@
+{
+  "name": "legalmind-word-addin",
+  "version": "1.0.0",
+  "description": "LegalMind Word Add-in — side-panel chat backed by LangGraph",
+  "scripts": {
+    "serve": "http-server . --port 3000 --cors",
+    "dev": "office-addin-https-reverse-proxy --port 3000",
+    "validate": "office-addin-manifest validate manifest.xml"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1",
+    "office-addin-dev-certs": "^1.13.0",
+    "office-addin-https-reverse-proxy": "^1.0.7",
+    "office-addin-manifest": "^1.14.2"
+  }
+}
